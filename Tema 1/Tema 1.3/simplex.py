@@ -74,7 +74,14 @@ class Simplex:
 
 if __name__ == '__main__':
     # The fist rows in input are constraints and the last line is the objective
-    input = [[-2, 1, 2], [-1, 2, 7], [1, 0, 3], [-1, -1, 0]]
+
+    # Ex. 4
+    # subpunctul a
+    # input = [[-2, 1, 2], [-1, 2, 7], [1, 0, 3], [-1, -1, 0]]
+    # subpunctul b
+    # input = [[-1, 1, 2], [-2, 1, 1], [-1, -2, 0]]
+    # subpunctul c
+    input = [[4, 5, -2, 22], [1, -2, 1, 30], [3, -2, -4, 0]]
     input = np.array(input, dtype=np.float32)
     simplex = Simplex(input)
     solution = simplex.solve_simplex()
