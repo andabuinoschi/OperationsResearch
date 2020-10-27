@@ -67,7 +67,7 @@ class Simplex:
             self.tableau[leaving_variable_index, pivot_index_column] = 1
             print("The new tableau of Simplex is: \n{0}".format(self.tableau))
             print("The new basic variables are the following: {0}".format(self.basic_variables))
-        return "The solution is {0} with basic variables {1} = {2}".format(-self.tableau[self.m, self.n],
+        return "The solution is {0} with basic variables {1} = {2}".format(-self.tableau[self.m, self.n].astype(np.float32),
                                                                            self.basic_variables,
                                                                            self.tableau[:self.m, self.n])
 
