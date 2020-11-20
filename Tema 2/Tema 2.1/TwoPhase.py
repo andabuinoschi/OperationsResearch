@@ -236,19 +236,22 @@ class TwoPhase:
             # We have to rewrite the basic variables in terms of non-basic variables
             if np.any(reduced_costs_basic_variables != 0):
                 # Check the basic variables which we need to rewrite
-                basic_variables_to_rewrite = self.all_variables[np.where(reduced_costs_basic_variables != 0)]
+                # Also pay attention by their order in the basis.
+                basic_variables_to_rewrite_in_all = self.all_variables[np.where(reduced_costs_basic_variables != 0)]
+                # Store indexes which we need in rewriting the basic variables
+                index_in_all_variables_to_rewrite = []
+                for basic_variable in self.basic_variables:
+                    if basic_variable in basic_variables_to_rewrite_in_all:
+                        index_in_all_variables_to_rewrite.append(np.min(np.where(self.all_variables == basic_variable)))
                 # Prepare a new matrix of shape (number_basic_variables_to_rewrite, tableau_columns) with elements 0
                 rewritten_cost_basic_variables = np.zeros(
-                    shape=(len(basic_variables_to_rewrite), self.tableau.shape[1]))
-                # Store indexes which we need in rewriting the basic variables
-                index_in_all_variables_to_rewrite = np.where(
-                    np.isin(self.all_variables, basic_variables_to_rewrite))
+                    shape=(len(basic_variables_to_rewrite_in_all), self.tableau.shape[1]))
                 index_in_all_variables_in_terms_of = np.where(
-                    np.logical_not(np.isin(self.all_variables, basic_variables_to_rewrite)))
+                    np.logical_not(np.isin(self.all_variables, basic_variables_to_rewrite_in_all)))
                 index_in_basic_variables_to_rewrite = np.where(
-                    np.isin(self.basic_variables, basic_variables_to_rewrite))
+                    np.isin(self.basic_variables, basic_variables_to_rewrite_in_all))
                 cost_basic_variables_to_rewrite = np.expand_dims(
-                    self.tableau[self.m, index_in_all_variables_to_rewrite[0]], axis=0)
+                    self.tableau[self.m, index_in_all_variables_to_rewrite], axis=0)
                 # Compute the new reduced cost array in terms of all the other variables which do not need change
                 rewritten_cost_basic_variables[:, index_in_all_variables_in_terms_of[0]] = \
                     -self.tableau[index_in_basic_variables_to_rewrite[0], :][:,
@@ -291,11 +294,10 @@ if __name__ == '__main__':
     # input = [[2, 1, 1, '=', 4], [1, 1, 2, '=', 2], ['min', 1, 1, 0, 0]]
 
     # Subpunctul c)
-    # Trebuie de verificat obiectivul final - in CPLEX da 7
-    input = [[1, 2, -1, 1, '=', 0], [2, -2, 3, 3, '=', 9], [1, -1, 2, -1, '=', 6], ['min', -3, 1, 3, -1, 0]]
+    # input = [[1, 2, -1, 1, '=', 0], [2, -2, 3, 3, '=', 9], [1, -1, 2, -1, '=', 6], ['min', -3, 1, 3, -1, 0]]
 
     # Subpunctul d)
-    # input = [[1, 1, '=', 2], [2, 2, '=', 4], ['min', 1, 2, 0]]
+    input = [[1, 1, '=', 2], [2, 2, '=', 4], ['min', 1, 2, 0]]
 
     two_phase = TwoPhase(input)
     two_phase.solve_two_phase_problem()
