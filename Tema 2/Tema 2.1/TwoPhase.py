@@ -275,7 +275,7 @@ class TwoPhase:
 
 if __name__ == '__main__':
     # Course 4 - example left as exercise -> slide 20
-    # input = [[3, 2, '=', 14], [2, -4, '>=', 2], [4, 3, '<=', 19], ['min', 2, 3, 0]]
+    input = [[3, 2, '=', 14], [2, -4, '>=', 2], [4, 3, '<=', 19], ['min', 2, 3, 0]]
 
     # Course 4 - example -> slide 30
     # input = [[1, 1, 2, '=', 2], [2, 1, 1, '=', 4], ['min', 1, 1, 0, 0]]
@@ -297,7 +297,7 @@ if __name__ == '__main__':
     # input = [[1, 2, -1, 1, '=', 0], [2, -2, 3, 3, '=', 9], [1, -1, 2, -1, '=', 6], ['min', -3, 1, 3, -1, 0]]
 
     # Subpunctul d)
-    input = [[1, 1, '=', 2], [2, 2, '=', 4], ['min', 1, 2, 0]]
+    # input = [[1, 1, '=', 2], [2, 2, '=', 4], ['min', 1, 2, 0]]
 
     two_phase = TwoPhase(input)
     two_phase.solve_two_phase_problem()

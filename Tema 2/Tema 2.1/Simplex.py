@@ -70,7 +70,7 @@ class Simplex:
             print("The new basic variables are the following: {0} = {1}".format(self.basic_variables,
                                                                         np.round(self.tableau[:self.m, self.n], 3).tolist()))
         print("The solution is {0} with basic variables {1} = {2}".format(
-            -self.tableau[self.m, self.n].astype(np.float32),
+            np.round(-self.tableau[self.m, self.n], 3),
             self.basic_variables,
             np.round(self.tableau[:self.m, self.n], 3).tolist()))
 
